@@ -104,9 +104,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     }
     
     @IBAction func saveButton(_ sender: Any) {
+        guard let image = imageView.image else {return}
+        
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(imageHandler), nil)
     }
     @IBAction func intensityChanged(_ sender: Any) {
         applyProcessing()
+    }
+    
+    @objc func imageHandler(_ image:UIImage , didFinishSavingWithError error: Error? , contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Ok", style: .default))
+            present(ac, animated: true)
+        }
+        else {
+            let ac = UIAlertController(title: "Saved!", message: "Your new photo has been savedto your library", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Ok", style: .default))
+            present(ac, animated: true)
+        }
     }
 }
 
