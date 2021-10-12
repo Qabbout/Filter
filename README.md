@@ -1,4 +1,4 @@
-# Filter
+# Filterator
 
 iOS app to apply filters on a selected pic and save it to the library, use Swift and UIKit.
 
